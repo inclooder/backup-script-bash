@@ -1,4 +1,4 @@
-# backup_script
+# backup-script-bash
 
 Simple configurable backup script for directories and mysql databases.
 
