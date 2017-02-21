@@ -1,4 +1,7 @@
 #!/bin/sh
+# vim: et sw=2 ts=2
+
+set -eo pipefail
 
 #CONFIGURATION
 DESTINATION_DIR=/var/backups
@@ -12,14 +15,12 @@ MYSQL_PASS=enter_your_password
 TMP_DIR=`mktemp -d`
 
 for dir in $BACKUP_DIRS; do
-        cp --parents -r "$dir" $TMP_DIR
+  cp --parents -r "$dir" $TMP_DIR
 done
 
 for db_name in $BACKUP_MYSQL_DBS; do
-        mysqldump -u $MYSQL_USER -p$MYSQL_PASS $db_name > $TMP_DIR/$db_name.sql
+  mysqldump -u $MYSQL_USER -p$MYSQL_PASS $db_name > $TMP_DIR/$db_name.sql
 done
 
 tar -C $TMP_DIR -zcf $DESTINATION_DIR/`date $TIMESTAMP_FORMAT`.tar.gz .
 rm -r $TMP_DIR
-
-exit 0
